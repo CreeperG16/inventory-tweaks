@@ -1,0 +1,8 @@
+{
+  "name": "Onix Template Script",
+  "description": "A template script for Onix Client",
+  "author": "Tom16",
+  "version": "0.1.0",
+  "type": "module",
+  "dependencies": []
+}
