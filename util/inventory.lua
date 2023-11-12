@@ -81,10 +81,11 @@ local function coords(slot)
   end
 
   -- Conditions for all screens
-  if screenIs("inventory_screen") then
-    -- Arbitrary slot numbering choices, will
-    -- probably change this later on
 
+  -- Arbitrary slot numbering choices, will probably
+  -- change this later on for general lib
+
+  if screenIs("inventory_screen") then
     if slot <= 40 then
       -- Armour
       return (midX - midXDiff), (midY - 75) + 18 * -(37 - slot) - 1, 18, 18
@@ -184,6 +185,7 @@ local function slotItem(slot)
   if slot <= 0 then return nil end
   if not screenIs(table.unpack(SUPPORTED_SCREENS)) then return nil end
 
+  -- Inventory slots
   if slot <= 36 then return player.inventory().at(slot) end
 
   if screenIs("inventory_screen") then
@@ -193,12 +195,14 @@ local function slotItem(slot)
     elseif slot == 41 then
       return player.inventory().offhand()
     elseif slot <= 46 then
+      -- 2x2 crafting grid (46 = output)
       local grid = { [42] = 29, [43] = 30, [44] = 31, [45] = 32, [46] = 51 }
       return player.inventory().ui(grid[slot])
     end
   end
 
   if screenIs("crafting_screen") then
+    -- 3x3 crafting grid (46 = output)
     if slot <= 46 then
       local grid = {
         [37] = 33, [38] = 34, [39] = 35,
@@ -233,7 +237,7 @@ local function slotItem(slot)
   end
 
   if screenIs("anvil_screen") then
-    -- 39 is anvil output, idk how to get that with ui()
+    -- 39 for anvil output, idk how to get that with ui()
     if slot <= 38 then
       return player.inventory().ui(-(36 - slot))
     end
