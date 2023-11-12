@@ -30,10 +30,10 @@ local function shulkerItem(item)
 end
 
 return function ()
-  local shulkerBoxes = {}
+  local boxes = {}
   for i = 1, 90 do
-    shulkerBoxes[i] = shulkerItem(inventory.getSlot(i))
+    boxes[i] = shulkerItem(inventory.getSlot(i))
   end
 
-  return shulkerBoxes
+  return boxes
 end

@@ -24,8 +24,8 @@ function screenIs(...)
 end
 
 local inventory = require "./util/inventory.lua"
-local shulkerItem = require "./util/shulker-item.lua"
 local renderShulker = require "./render.lua"
+local boxes = require "./util/shulker-item.lua"
 
 event.listen("MouseInput", function(button, down)
   if not (button == 1 and down) then return end
@@ -44,7 +44,7 @@ event.listen("KeyboardInput", function(key, down)
 end)
 
 function render()
-  shulkerBoxes = shulkerItem()
+  shulkerBoxes = boxes()
 
   gfx.text(10, 10, gui.screen())
 
