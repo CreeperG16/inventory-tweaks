@@ -221,6 +221,7 @@ local function slotItem(slot)
     "horse_screen"
   ) then
     if slot <= 90 then
+      ---@diagnostic disable-next-line: undefined-field
       return player.inventory().screen("container_items", -(36 - slot))
     end
   end
