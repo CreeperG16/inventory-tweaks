@@ -5,7 +5,7 @@ local function shulkerItem(item)
   if not item.name:find("shulker_box") then return end
 
   local nbt = (item.location ~= nil and item.location ~= -1) and getItemNbt(item.location) or item.nbt
-  if not nbt or not nbt.Items then return end
+  if not nbt or not nbt.Items or #nbt.Items == 0 then return end
 
   local items = {}
   local itemCounts = {}

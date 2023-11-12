@@ -2,7 +2,7 @@
   "name": "Shulker display",
   "description": "Show a shulker box's contents in your inventory",
   "author": "Tom16",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
-  "dependencies": ["key-codes", "inventory-utils"]
+  "dependencies": ["key-codes"]
 }

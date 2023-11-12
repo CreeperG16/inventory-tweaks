@@ -5,8 +5,8 @@ local settings = {
   ---@diagnostic disable-next-line: undefined-global
   toggleView = client.settings.addNamelessKeybind("Toggle view", KeyCodes.LeftAlt),
   colouredShulkers = client.settings.addNamelessBool("Coloured shulkers", true),
-  defaultView = client.settings.addNamelessEnum("Default view", 1, {{1, "Item count"}, {2, "Full view"}}),
-  countView = client.settings.addNamelessEnum("Count format", 1, {{1, "Total items"}, {2, "Total stacks (rounded up)"}, {3, "Total stacks (rounded down)"}}),
+  defaultView = client.settings.addNamelessEnum("Default view", 2, {{ 1, "Item count" }, { 2, "Full view" }}),
+  countView = client.settings.addNamelessEnum("Count format", 1, {{ 1, "Total items" }, { 2, "Total stacks (rounded up)" }, { 3, "Total stacks (rounded down)" }}),
   client.settings.stopCategory()
 }
 
@@ -23,6 +23,7 @@ function screenIs(...)
   return false
 end
 
+local inventory = require "./util/inventory.lua"
 local shulkerItem = require "./util/shulker-item.lua"
 local renderShulker = require "./render.lua"
 
@@ -47,32 +48,7 @@ function render()
 
   gfx.text(10, 10, gui.screen())
 
-  -- TODO: implement for other screens
-  if not screenIs(
-    "inventory_screen",
-    "crafting_screen",
-    "small_chest_screen",
-    "ender_chest_screen",
-    "barrel_screen",
-    "large_chest_screen",
-    "furnace_screen",
-    "blast_furnace_screen",
-    "smoker_screen",
-    "dropper_screen",
-    "dispenser_screen",
-    "hopper_screen",
-    "anvil_screen",
-    "loom_screen",
-    "enchanting_screen",
-    "cartography_screen",
-    "beacon_screen",
-    "trade_screen",
-    "horse_screen", -- Breaks on donkeys/llamas with less than max storage capacity
-    "brewing_stand_screen",
-    "smithing_table_screen",
-    "grindstone_screen",
-    "stonecutter_screen"
-  ) then return end
+  if not screenIs(table.unpack(inventory.SUPPORTED_SCREENS)) then return end
 
   for slot, shulker in pairs(shulkerBoxes) do
     if mouseIn(inventory.coords(slot)) then
