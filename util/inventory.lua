@@ -232,14 +232,18 @@ local function slotItem(slot)
 
   if screenIs("furnace_screen", "blast_furnace_screen", "smoker_screen") then
     if slot <= 39 then
-      return nil --TODO?
+      local screens = { [37] = "furnace_item", [38] = "furnace_fuel", [39] = "furnace_result" }
+      return player.inventory().screen(screens[slot], 1)
+      --return nil --TODO?
     end
   end
 
   if screenIs("anvil_screen") then
     -- 39 for anvil output, idk how to get that with ui()
     if slot <= 38 then
-      return player.inventory().ui(-(36 - slot))
+      local screens = { [37] = "anvil_item", [38] = "anvil_item", [39] = "anvil_result" }
+      return player.inventory().screen(screens[slot], 1)
+      --return player.inventory().ui(-(36 - slot))
     end
   end
 end

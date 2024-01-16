@@ -31,6 +31,7 @@ end
 
 return function ()
   local boxes = {}
+
   for i = 1, 90 do
     boxes[i] = shulkerItem(inventory.getSlot(i))
   end

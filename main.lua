@@ -3,7 +3,7 @@ renderEverywhere = true
 local settings = {
   client.settings.addCategory("View settings"),
   ---@diagnostic disable-next-line: undefined-global
-  toggleView = client.settings.addNamelessKeybind("Toggle view", KeyCodes.LeftAlt),
+  toggleView = client.settings.addNamelessKeybind("Toggle view", KeyCodes.LeftShift),
   colouredShulkers = client.settings.addNamelessBool("Coloured shulkers", true),
   defaultView = client.settings.addNamelessEnum("Default view", 2, {{ 1, "Item count" }, { 2, "Full view" }}),
   countView = client.settings.addNamelessEnum("Count format", 1, {{ 1, "Total items" }, { 2, "Total stacks (rounded up)" }, { 3, "Total stacks (rounded down)" }}),
@@ -24,8 +24,8 @@ function screenIs(...)
 end
 
 local inventory = require "./util/inventory.lua"
-local renderShulker = require "./render.lua"
 local boxes = require "./util/shulker-item.lua"
+local renderShulker = require "./render.lua"
 
 event.listen("MouseInput", function(button, down)
   if not (button == 1 and down) then return end
