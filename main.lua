@@ -12,7 +12,6 @@ local settings = {
 
 MX, MY = gui.mousex, gui.mousey
 local toggleView = false
-local shulkerBoxes = {}
 
 function mouseIn(x, y, w, h)
   return (x <= MX() and MX() < x + w) and (y <= MY() and MY() < y + h)
@@ -23,21 +22,8 @@ function screenIs(...)
   return false
 end
 
---local inventory = raequire "./util/inventory.lua"
---local boxes = raequire "./util/shulker-item.lua"
+local shulkerItem = require "./util/shulker-item.lua"
 local renderShulker = require "./render.lua"
-
---event.listen("MouseInput", function(button, down)
---  if not (button == 1 and down) then return end
-
---  if
---    mouseIn(inventory.craftingBook.position()) and
---    screenIs("inventory_screen", "crafting_screen")
---  then
---    -- Janky but kinda works as long as you don't mess around with it too much
---    inventory.craftingBook.toggle()
---  end
---end)
 
 -- might be missing some inv screens
 local SUPPORTED_SCREENS = {
@@ -78,33 +64,11 @@ event.listen("InventoryTick", function()
   local inv = player.inventory().modify()
   if not inv then return end
 
+  -- small problem - if you dont hover another slot, as this is LAST hover
+  -- slot val, the shulker view will stay (most visible on e.g. anvil or top of inv)
+  -- no easy way to tell if im currently hovering a slot or not
   local item = inv.at(inv.lastHoverSlotName, inv.lastHoverSlotValue)
-  if not item then return end
-  if not item.name:find("shulker_box") then return end
-
-  local nbt = (item.location ~= nil and item.location ~= -1) and getItemNbt(item.location) or item.nbt
-  if not nbt or not nbt.Items or #nbt.Items == 0 then return end
-
-  local items = {}
-  local itemCounts = {}
-  for key, value in pairs(nbt.Items) do
-    if key == "str" or key == "strf" then goto cont end
-
-    items[value.Slot] = value
-    itemCounts[value.Name] = (itemCounts[value.Name] or 0) + value.Count
-
-    ::cont::
-  end
-
-  local sortedCounts = {}
-  for name, count in pairs(itemCounts) do table.insert(sortedCounts, { name, count }) end
-  table.sort(sortedCounts, function (a, b) return a[2] > b[2] end)
-
-  currentShulker = {
-    items = items,
-    itemCounts = sortedCounts,
-    colour = item.name:gsub("_shulker_box", "")
-  }
+  currentShulker = shulkerItem(item)
 end)
 
 function render()
@@ -112,18 +76,3 @@ function render()
 
   renderShulker(currentShulker, toggleView == (settings.defaultView.value == 2))
 end
-
---function render()
---  shulkerBoxes = boxes()
-
---  gfx.text(10, 10, gui.screen())
-
---  if not screenIs(table.unpack(inventory.SUPPORTED_SCREENS)) then return end
-
---  for slot, shulker in pairs(shulkerBoxes) do
---    if mouseIn(inventory.coords(slot)) then
---      renderShulker(shulker, toggleView == (settings.defaultView.value == 2))
---      break
---    end
---  end
---end
