@@ -53,8 +53,9 @@ local function itemCountText(count, slotX, slotY)
     countText = stacks == 0 and tostring(count) or (tostring(stacks) .. "s")
   end
 
-  -- Doesn't return true when it should as of now :|
-  local textScale = gui.font().isMinecrafttia and 1 or 1.2
+  -- Autocomplete typo xd (minecrafttia??? too much t)
+  ---@diagnostic disable-next-line: undefined-field
+  local textScale = gui.font().isMinecraftia and 1 or 1.2
 
   local tW, tH = gui.font().width(countText, textScale), gui.font().height * textScale
   gfx.color(255, 255, 255)

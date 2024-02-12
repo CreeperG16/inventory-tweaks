@@ -1,3 +1,15 @@
+--[[
+  smol shulker contents viewer script that took waaaaaay too long to release
+  originally used mouse coordinates to locate currently hovered inv slots
+  thank onix for the better api via inventory.modify
+  though it isn't perfect and you might get the shulker window showing when it
+  isn't supposed to (if the shulker was the last slot you hovered)
+  though I have no idea if there's an easy way to fix that
+  anyway, enjoy
+
+  -- Tom16 (aka. Jerry)
+]]
+
 renderEverywhere = true
 
 local settings = {
