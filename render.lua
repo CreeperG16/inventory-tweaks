@@ -129,7 +129,7 @@ return function(shulker, counts)
 
   if shulker.colour and settings.colouredShulkers.value then
     local hex = tonumber(COLOURS[shulker.colour], 16)
-    local r, g, b = (hex & 0xff0000) >> 16, (hex & 0xff00) >> 8, hex & 0xff
+    local r, g, b = (hex >> 16) & 0xff, (hex >> 8) & 0xff, hex & 0xff
 
     setTint(r, g, b)
   else
