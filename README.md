@@ -19,3 +19,6 @@ Want to know exactly how much you have of each item in total? Hold a predefined 
 
 ## How do I get it?
 Head over to the [releases](https://github.com/CreeperG16/shulker-display/releases) page to download the latest version of the script, or get it from other sources such as the Onix Client Scripts [github repo](https://github.com/OnixClient-Scripts/OnixClient_Scripts).
+
+### Building it yourself
+Currently the helper program I made to organise and build my scripts is private. You can probably manually copy and paste the different files into the right places yourself though, if you were really determined not to use the download link on the latest release.
