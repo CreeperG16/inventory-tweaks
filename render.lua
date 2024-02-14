@@ -46,9 +46,9 @@ local function itemCountText(count, slotX, slotY)
   if count == 1 then return end
   local countText = tostring(count)
 
-  if settings.countView.value == 2 then
+  if Settings.countView.value == 2 then
     countText = tostring((count + 63) // 64) .. "s"
-  elseif settings.countView.value == 3 then
+  elseif Settings.countView.value == 3 then
     local stacks = count // 64
     countText = stacks == 0 and tostring(count) or (tostring(stacks) .. "s")
   end
@@ -127,7 +127,7 @@ return function(shulker, counts)
   local renderLeft = bgX + bgW > gui.width()
   if renderLeft then bgX = MX() - bgW - 11 end
 
-  if shulker.colour and settings.colouredShulkers.value then
+  if shulker.colour and Settings.colouredShulkers.value then
     local hex = tonumber(COLOURS[shulker.colour], 16)
     local r, g, b = (hex >> 16) & 0xff, (hex >> 8) & 0xff, hex & 0xff
 

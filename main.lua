@@ -1,4 +1,5 @@
 --[[
+  renamed to inv tweaks because add more tweaks to the same script
   smol shulker contents viewer script that took waaaaaay too long to release
   originally used mouse coordinates to locate currently hovered inv slots
   thank onix for the better api via inventory.modify
@@ -12,7 +13,9 @@
 
 renderEverywhere = true
 
-local settings = {
+Settings = {
+  client.settings.addCategory("Shulker Display"),
+
   client.settings.addInfo("Tint the background of the contents hover to the dye colour of the viewed shulker box."),
   colouredShulkers = client.settings.addNamelessBool("Coloured Shulkers", true),
 
@@ -22,14 +25,35 @@ local settings = {
   ---@diagnostic disable-next-line: undefined-global
   toggleView = client.settings.addNamelessKeybind("Toggle View", KeyCodes.Shift),
   defaultView = client.settings.addNamelessEnum("Default View", 2, { { 1, "Item Count" }, { 2, "Full View" } }),
+
   client.settings.addAir(2),
 
   client.settings.addInfo("This only applies to the condensed Item Count view."),
   countView = client.settings.addNamelessEnum("Count Format", 1, { { 1, "Total Items" }, { 2, "Total Stacks (Rounded Up)" }, { 3, "Total Stacks (Rounded Down)" } }),
+
   client.settings.addInfo("Total Items: 2 stacks and 23 will show '151'."),
   client.settings.addInfo("Total Stacks (Rounded Up): 2 stacks and 23 will show '3s'."),
   client.settings.addInfo("Total Stacks (Rounded Down): 2 stacks and 23 will show '2s'."),
+
   client.settings.addAir(5),
+
+  client.settings.stopCategory(),
+  client.settings.addCategory("Miscellaneous Tweaks"),
+
+  craftingShift = client.settings.addNamelessBool("Shift Click Crafting", true),
+  client.settings.addInfo("Shift-click items from your inventory into crafting tables."),
+
+  client.settings.addAir(2),
+
+  dragMouse = client.settings.addNamelessBool("Drag Over Items", true),
+  client.settings.addInfo("Drag your mouse over multiple slots while holding shift to move them all."),
+
+  client.settings.addAir(2),
+
+  scrollItems = client.settings.addNamelessBool("Scroll Items", true),
+  client.settings.addInfo("Use your scroll wheel to move a specific amount of items from a slot."),
+
+  client.settings.stopCategory()
 }
 
 MX, MY = gui.mousex, gui.mousey
@@ -40,11 +64,8 @@ function screenIs(...)
   return false
 end
 
-local shulkerItem = require "./util/shulker-item.lua"
-local renderShulker = require "./render.lua"
-
 -- might be missing some inv screens
-local SUPPORTED_SCREENS = {
+local SHULKER_SUPPORTED_SCREENS = {
   "inventory_screen",
   "crafting_screen",
   "small_chest_screen",
@@ -71,15 +92,46 @@ local SUPPORTED_SCREENS = {
   "stonecutter_screen"
 }
 
+--#region Shulker display
+local shulkerItem = require "./util/shulker-item.lua"
+local renderShulker = require "./render.lua"
+--#endregion
+
+--#region Misc tweaks
+local craftingShift = require "./tweaks/crafting-shift.lua"
+local dragMouse = require "./tweaks/drag-mouse.lua"
+local scrollItems = require "./tweaks/scroll-items.lua"
+--#endregion
+
+KeyStates = {
+  lmb = false,
+  rmb = false,
+  shift = false,
+}
+
 event.listen("KeyboardInput", function(key, down)
-  if key == settings.toggleView.value then toggleView = down end
+  ---@diagnostic disable-next-line: undefined-global
+  if key == KeyCodes.Shift then KeyStates.shift = down end
+  if key == Settings.toggleView.value then toggleView = down end
+end)
+
+event.listen("MouseInput", function(btn, down)
+  if btn == 1 then KeyStates.lmb = down
+  elseif btn == 2 then KeyStates.rmb = down
+  end
+
+  scrollItems.onMouse(btn, down)
 end)
 
 local currentShulker = nil
 event.listen("InventoryTick", function()
   currentShulker = nil
-
   local inv = player.inventory().modify()
+
+  craftingShift.onTick(inv)
+  dragMouse.onTick(inv)
+  scrollItems.onTick(inv)
+
   if not inv then return end
 
   -- small problem - if you dont hover another slot, as this is LAST hover
@@ -90,7 +142,7 @@ event.listen("InventoryTick", function()
 end)
 
 function render()
-  if currentShulker == nil or not screenIs(table.unpack(SUPPORTED_SCREENS)) then return end
+  if currentShulker == nil or not screenIs(table.unpack(SHULKER_SUPPORTED_SCREENS)) then return end
 
-  renderShulker(currentShulker, toggleView == (settings.defaultView.value == 2))
+  renderShulker(currentShulker, toggleView == (Settings.defaultView.value == 2))
 end
