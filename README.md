@@ -1,6 +1,7 @@
-# shulker-display
-An Onix Client script which allows you to see the full contents of shulker boxes without placing the box down.
+# inventory-tweaks
+An Onix Client script which adds a few nice tweaks for using your inventory, such as shulker display, which allows you to see the full contents of shulker boxes without placing the box down; and some miscellaneous tweaks to allow you to shift+click items into crafting tables and drag your mouse over multiple slots while holding shift.
 
+# Shulker Display
 ## See everything
 You can now see **all** the items contained in any shulker box, without having to place it down, or even take it out of your enderchest.
 
@@ -17,8 +18,18 @@ Want to know exactly how much you have of each item in total? Hold a predefined 
 ![big shulker view](assets/assorted_blocks_1.png)
 ![little shulker view](assets/assorted_blocks_2.png)
 
+# Misc tweaks
+## Shift Click Crafting
+Shift+click items from your inventory into the crafting table. This feature was added to vanilla Java edition in 1.15.
+
+## Drag Over Items
+Hold shift and left click, and drag your mouse over multiple slots to move all of them into or out of containers much faster.
+
+## Scroll Items
+Scroll downwards on a slot to fine-tune how many items to move from that slot.
+
 ## How do I get it?
-Head over to the [releases](https://github.com/CreeperG16/shulker-display/releases) page to download the latest version of the script, or get it from other sources such as the Onix Client Scripts [github repo](https://github.com/OnixClient-Scripts/OnixClient_Scripts).
+Head over to the [releases](https://github.com/CreeperG16/inventory-tweaks/releases) page to download the latest version of the script, or get it from other sources such as the Onix Client Scripts [github repo](https://github.com/OnixClient-Scripts/OnixClient_Scripts).
 - **Disclaimer**: The source code on the repository **won't work** with onix client as is!
 
 ### Building it yourself
