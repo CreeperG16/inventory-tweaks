@@ -13,34 +13,27 @@
 renderEverywhere = true
 
 local settings = {
-  client.settings.addAir(2),
-
   client.settings.addInfo("Tint the background of the contents hover to the dye colour of the viewed shulker box."),
-  colouredShulkers = client.settings.addNamelessBool("Coloured shulkers", true),
+  colouredShulkers = client.settings.addNamelessBool("Coloured Shulkers", true),
 
   client.settings.addAir(2),
 
-  client.settings.addInfo("Assign a button to toggle between views (Full view and condensed item count view)"),
+  client.settings.addInfo("Assign a button to toggle between views (Full View and condensed Item Count view)."),
   ---@diagnostic disable-next-line: undefined-global
-  toggleView = client.settings.addNamelessKeybind("Toggle view", KeyCodes.LeftShift),
-  defaultView = client.settings.addNamelessEnum("Default view", 2, {{ 1, "Item count" }, { 2, "Full view" }}),
-  countView = client.settings.addNamelessEnum("Count format", 1, {{ 1, "Total items" }, { 2, "Total stacks (rounded up)" }, { 3, "Total stacks (rounded down)" }}),
+  toggleView = client.settings.addNamelessKeybind("Toggle View", KeyCodes.Shift),
+  defaultView = client.settings.addNamelessEnum("Default View", 2, { { 1, "Item Count" }, { 2, "Full View" } }),
+  client.settings.addAir(2),
 
-  client.settings.addInfo("This only applies to the condensed item count view."),
-
-  client.settings.addCategory("Examples"),
-  client.settings.addInfo("Total items: 2 stacks and 23 will show 151."),
-  client.settings.addInfo("Total stacks (rounded up): 2 stacks and 23 will show 3."),
-  client.settings.addInfo("Total stacks (rounded down): 2 stacks and 23 will show 2."),
-  client.settings.stopCategory(),
+  client.settings.addInfo("This only applies to the condensed Item Count view."),
+  countView = client.settings.addNamelessEnum("Count Format", 1, { { 1, "Total Items" }, { 2, "Total Stacks (Rounded Up)" }, { 3, "Total Stacks (Rounded Down)" } }),
+  client.settings.addInfo("Total Items: 2 stacks and 23 will show '151'."),
+  client.settings.addInfo("Total Stacks (Rounded Up): 2 stacks and 23 will show '3s'."),
+  client.settings.addInfo("Total Stacks (Rounded Down): 2 stacks and 23 will show '2s'."),
+  client.settings.addAir(5),
 }
 
 MX, MY = gui.mousex, gui.mousey
 local toggleView = false
-
-function mouseIn(x, y, w, h)
-  return (x <= MX() and MX() < x + w) and (y <= MY() and MY() < y + h)
-end
 
 function screenIs(...)
   for _, s in ipairs({ ... }) do if gui.screen() == s then return true end end

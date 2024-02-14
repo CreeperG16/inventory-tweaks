@@ -1,8 +1,8 @@
 {
-  "name": "Shulker display",
+  "name": "Shulker Display",
   "description": "Show a shulker box's contents in your inventory",
   "author": "Tom16",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "dependencies": ["key-codes"]
 }
