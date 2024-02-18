@@ -50,6 +50,14 @@ Settings = {
 
   client.settings.addAir(2),
 
+  dragDrop = client.settings.addNamelessBool("Drag Drop Items", true),
+  ---@diagnostic disable-next-line: undefined-global
+  dropKey = client.settings.addNamelessKeybind("Drop Key", KeyCodes.KeyQ),
+  requireRightClickForDragDrop = client.settings.addNamelessBool("Require Right Click", true),
+  client.settings.addInfo("Drag your mouse over multiple slots while holding your drop key to drop them all."),
+
+  client.settings.addAir(2),
+
   scrollItems = client.settings.addNamelessBool("Scroll Items", true),
   client.settings.addInfo("Use your scroll wheel to move a specific amount of items from a slot."),
 
@@ -100,6 +108,7 @@ local renderShulker = require "./render.lua"
 --#region Misc tweaks
 local craftingShift = require "./tweaks/crafting-shift.lua"
 local dragMouse = require "./tweaks/drag-mouse.lua"
+local dragDrop = require "./tweaks/drag-drop.lua"
 local scrollItems = require "./tweaks/scroll-items.lua"
 --#endregion
 
@@ -107,15 +116,21 @@ KeyStates = {
   lmb = false,
   rmb = false,
   shift = false,
+  drop = false,
 }
 
 event.listen("KeyboardInput", function(key, down)
+  if gui.screen() == "hud_screen" then return end
+
   ---@diagnostic disable-next-line: undefined-global
   if key == KeyCodes.Shift then KeyStates.shift = down end
   if key == Settings.toggleView.value then toggleView = down end
+  if key == Settings.dropKey.value then KeyStates.drop = down end
 end)
 
 event.listen("MouseInput", function(btn, down)
+  if gui.screen() == "hud_screen" then return end
+
   if btn == 1 then KeyStates.lmb = down
   elseif btn == 2 then KeyStates.rmb = down
   end
@@ -130,6 +145,7 @@ event.listen("InventoryTick", function()
 
   craftingShift.onTick(inv)
   dragMouse.onTick(inv)
+  dragDrop.onTick(inv)
   scrollItems.onTick(inv)
 
   if not inv then return end

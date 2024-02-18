@@ -24,6 +24,7 @@ Shift+click items from your inventory into the crafting table. This feature was 
 
 ## Drag Over Items
 Hold shift and left click, and drag your mouse over multiple slots to move all of them into or out of containers much faster.
+Drag your mouse over multiple slots while holding your drop key to drop all items from those slots.
 
 ## Scroll Items
 Scroll downwards on a slot to fine-tune how many items to move from that slot.
