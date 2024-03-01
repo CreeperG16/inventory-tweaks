@@ -119,7 +119,12 @@ KeyStates = {
   drop = false,
 }
 
+local lastScreen = ""
+local ignoreInput = false
+
 event.listen("KeyboardInput", function(key, down)
+  if ignoreInput then return end
+
   if gui.screen() == "hud_screen" then return end
 
   ---@diagnostic disable-next-line: undefined-global
@@ -129,6 +134,8 @@ event.listen("KeyboardInput", function(key, down)
 end)
 
 event.listen("MouseInput", function(btn, down)
+  if ignoreInput then return end
+
   if gui.screen() == "hud_screen" then return end
 
   if btn == 1 then KeyStates.lmb = down
@@ -158,6 +165,14 @@ event.listen("InventoryTick", function()
 end)
 
 function render()
+  local screen = gui.screen()
+  if screen ~= lastScreen then
+    lastScreen = screen
+    ignoreInput = true
+  else
+    ignoreInput = false
+  end
+
   if currentShulker == nil or not screenIs(table.unpack(SHULKER_SUPPORTED_SCREENS)) then return end
 
   renderShulker(currentShulker, toggleView == (Settings.defaultView.value == 2))
