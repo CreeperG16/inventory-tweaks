@@ -30,7 +30,7 @@ Drag your mouse over multiple slots while holding your drop key to drop all item
 Scroll downwards on a slot to fine-tune how many items to move from that slot.
 
 ## How do I get it?
-[Direct Import](https://www.samat.hu/redirect#minecraft:///OnixClient/LegacyScripting/%7B%22reason%22%3A%22download%22%2C%22content%22%3A%7B%22url%22%3A%22https%3A%2F%2Fgithub.com%2FCreeperG16%2Finventory-tweaks%2Freleases%2Flatest%2Fdownload%2Finventory-tweaks.lua%22%2C%22type%22%3A%22module%22%7D%7D)
+[Direct Import](https://www.samat.hu/redirect#minecraft:///OnixClient/LegacyScripting/%7B%22reason%22%3A%22download%22%2C%22content%22%3A%7B%22url%22%3A%22https%3A%2F%2Fgithub.com%2FCreeperG16%2Finventory-tweaks%2Freleases%2Flatest%2Fdownload%2Finventory-tweaks.lua%22%2C%22type%22%3A%22module%22%7D%7D) - Use this if Onix Client is open and running on your PC right now (in the game)
 
 Head over to the [releases](https://github.com/CreeperG16/inventory-tweaks/releases) page to download the latest version of the script, or get it from other sources such as the Onix Client Scripts [github repo](https://github.com/OnixClient-Scripts/OnixClient_Scripts).
 - **Disclaimer**: The source code on the repository **won't work** with onix client as is!
